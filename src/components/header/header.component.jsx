@@ -1,42 +1,38 @@
 import React from "react";
 import CartIcon from "./../cart-icon/cart-icon.component";
 import CartDropdown from "./../cart-dropdown/cart-dropdown.component";
-import "./header.styles.scss";
 import { ReactComponent as Logo } from "../../assets/crown.svg";
 import { auth } from "../../firebase/firebase.utils";
 import { connect } from "react-redux";
 // import { createStructuredSelector } from "reselect";
 import { selectCartHidden } from "../../redux/cart/cart.selectors";
 import { selectCurrentUser } from "./../../redux/user/user.selector";
-import { HeaderContainer } from "./header.styles";
-import { LogoContainer } from "./header.styles";
-import { OptionLink } from "./header.styles";
-import { OptionDiv } from "./header.styles";
+import {
+  HeaderContainer,
+  LogoContainer,
+  OptionsContainer,
+  OptionLink,
+  OptionDiv,
+} from "./header.styles";
 
 const Header = ({ currentUser, hidden }) => {
   return (
-    <HeaderContainer className="header">
-      <LogoContainer className="logo-container" to="/">
-        <Logo className="logo" />
+    <HeaderContainer>
+      <LogoContainer to="/">
+        <Logo />
       </LogoContainer>
-      <div className="options">
-        <OptionLink className="option" to="/shop">
-          SHOP
-        </OptionLink>
-        <OptionLink className="option" to="/contact">
-          CONTACT
-        </OptionLink>
+      <OptionsContainer>
+        <OptionLink to="/shop">SHOP</OptionLink>
+        <OptionLink to="/contact">CONTACT</OptionLink>
         {currentUser ? (
-          <OptionDiv className="option" onClick={() => auth.signOut()}>
+          <OptionDiv onClick={() => auth.signOut()}>
             <strong>SIGN OUT</strong>
           </OptionDiv>
         ) : (
-          <OptionLink className="option" to="/signin">
-            SIGN IN
-          </OptionLink>
+          <OptionLink to="/signin">SIGN IN</OptionLink>
         )}
         <CartIcon />
-      </div>
+      </OptionsContainer>
       {hidden ? null : <CartDropdown />}
     </HeaderContainer>
   );
